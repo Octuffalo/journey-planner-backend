@@ -23,7 +23,7 @@ app.include_router(journey_routes.router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://journey-planner-ui.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
