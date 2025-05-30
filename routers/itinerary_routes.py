@@ -9,7 +9,7 @@ from models.user import User
 
 router = APIRouter(prefix="/itineraries", tags=["Itineraries"])
 
-# ✅ Save or update an itinerary (must be logged in)
+# Saving or updating an itinerary (must be logged in)
 @router.post("/", response_model=ItineraryResponse)
 def save_itinerary(
     itin: ItineraryCreate,
@@ -33,7 +33,7 @@ def save_itinerary(
     db.refresh(new_itin)
     return new_itin
 
-# ✅ Secure route: Get only *your* itineraries
+# Secure route: Get only *your* itineraries
 @router.get("/me", response_model=List[ItineraryResponse])
 def get_user_itineraries(
     db: Session = Depends(get_db),
@@ -41,7 +41,7 @@ def get_user_itineraries(
 ):
     return db.query(Itinerary).filter_by(user_id=current_user.username).order_by(Itinerary.saved_at.desc()).all()
 
-# ✅ Update itinerary (only by owner)
+# Updating itinerary (only by owner)
 @router.put("/{service_id}", response_model=ItineraryResponse)
 def update_itinerary(
     service_id: str,
@@ -61,7 +61,7 @@ def update_itinerary(
     db.refresh(itin)
     return itin
 
-# ✅ Delete itinerary (only by owner)
+# Deleting itinerary (only by owner)
 @router.delete("/{itinerary_id}")
 def delete_itinerary(
     itinerary_id: int,
